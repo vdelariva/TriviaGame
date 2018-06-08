@@ -1,5 +1,5 @@
 body {
-    /* background: url(../images/science.jpeg); */
+    /* background: url(../images/science-bg.jpeg); */
     text-align: center;
 
 }
@@ -21,4 +21,9 @@ h2 {
     background-color: white;
     height: 250px;
     text-align: center;
+}
+
+img {
+    /* border-radius: 50%; */
+    box-shadow: 5px 5px 20px black;
 }
