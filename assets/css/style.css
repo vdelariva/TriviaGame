@@ -1,6 +1,6 @@
 body {
     /* background: url(../images/science-bg.jpeg); */
-    text-align: center;
+    /* text-align: center; */
 
 }
 
@@ -11,6 +11,7 @@ h2 {
 
 .container {
     width: 100%;
+    /* text-align: center; */
 }
 
 .jumbotron {
