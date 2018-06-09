@@ -41,8 +41,8 @@ var q8 = new TriviaQuestion("Lobster blood is blue once it is exposed to air. Wh
 var q9 = new TriviaQuestion("Human blood is red when it is exposed to air. What color is the deoxygenated blood inside your veins?","blue","clear","red","brown","red","Medical and science texts show red arteries and blue veins, but that doesn't have anything to do with the color of the blood they carry. Veins appear blue or green because they are viewed through skin. Deoxygenated blood is a darker red than oxygenated blood, but it's still red.","assets/images/circulatory.jpg");
 var q10 = new TriviaQuestion("Scientist have studied public restroom stall use. The toilet used the least may have fewest germs. Which stall is this?","first door on the right","first door on the left","any middle stall","either stall furthest from the entrance","first door on the left","First door on the left. There's some practical science you can apply to make your life better!","assets/images/toilet.jpg");
 
-// var questions = [q1,q2,q3,q4,q5,q6,q7,q8,q9,q10];
-var questions = [q9,q10]
+var questions = [q1,q2,q3,q4,q5,q6,q7,q8,q9,q10];
+// var questions = [q9,q10] // Used for testing
 
 var questionIndex = 0;
 var numCorrect = 0;
