@@ -1,6 +1,5 @@
 $(document).ready(function() {
 
-
 restartQuiz();
 
 $("button").on("click", function() {
@@ -11,23 +10,29 @@ $("button").on("click", function() {
     }
     // Quiz answer button pressed, check answer
     else {
-        var answer = checkAnswer($(this).attr("id"),questions[questionIndex]);
+        var answer = checkAnswer($(this).attr("data-btnVal"),questions[questionIndex]);
         displayAnswer (answer, 0, questions[questionIndex])
 
         setTimeout(nextQuestion, displayAnswerTime);
     }
 
   });
-})
+});
 
 // Global Variables & Constants
-const answerQuestionTime = 5000;
-const displayAnswerTime = 3000;
+
+// Question timer and second time variables/constants
+const answerQuestionTime = 15000; // 15 seconds
+const displayAnswerTime = 10000; // 10 seconds
 const second = 1000;
 
 var questionTimer;
 var secondTimer;
 var timeRemaining;
+
+var questionIndex = 0;
+var numCorrect = 0;
+var numWrong = 0;
 
 // Trivia Questions
 var q1 = new TriviaQuestion("According to Apollo astronauts, the Moon smells like:","cheese","gasoline","burnt gunpowder","coffee grounds","burnt gunpowder","The Apollo astronauts said that not only did the Moon smell like burnt gunpowder, but it also tasted like it.","assets/images/moon.jpg");
@@ -42,11 +47,7 @@ var q9 = new TriviaQuestion("Human blood is red when it is exposed to air. What 
 var q10 = new TriviaQuestion("Scientist have studied public restroom stall use. The toilet used the least may have fewest germs. Which stall is this?","first door on the right","first door on the left","any middle stall","either stall furthest from the entrance","first door on the left","First door on the left. There's some practical science you can apply to make your life better!","assets/images/toilet.jpg");
 
 var questions = [q1,q2,q3,q4,q5,q6,q7,q8,q9,q10];
-// var questions = [q9,q10] // Used for testing
-
-var questionIndex = 0;
-var numCorrect = 0;
-var numWrong = 0;
+// var questions = [q1,q2] // Used for testing
 
 // Functions & Objects
 
@@ -77,19 +78,23 @@ function nextQuestion(){
 function displayQuestion(q) {
     questionTimer = setTimeout(function(){displayAnswer(false, 1, questions[questionIndex])}, answerQuestionTime); // Set time allowed to answer question
     secondTimer = setInterval(secondCountdown, second); // Set interval time to count down seconds
-    timeRemaining = answerQuestionTime/1000;
+    timeRemaining = answerQuestionTime/1000; //convert to seconds
+    var questionNum = questionIndex+1;
 
     $("#timeRemaining").html("Time Remaining: "+timeRemaining+" seconds").show(); // Show the time remaining to answer question
 
+    $("#questionNumber").html(questionNum+". ").show();; // Display question number
     $("#triviaQuestion").html(q.question).show(); // Display the trivia question with possible answers
-    $("#btn1").html(q.ans1).show();
-    $("#btn2").html(q.ans2).show();
-    $("#btn3").html(q.ans3).show();
-    $("#btn4").html(q.ans4).show();
+    $("#btn1").html(q.ans1).attr("data-btnVal",q.ans1).show();
+    $("#btn2").html(q.ans2).attr("data-btnVal",q.ans2).show();
+    $("#btn3").html(q.ans3).attr("data-btnVal",q.ans3).show();
+    $("#btn4").html(q.ans4).attr("data-btnVal",q.ans4).show();
+    enableButtons();
 }
 
 // Clears the question
 function clearQuestion() {
+    $("#questionNumber").hide();
     $("#triviaQuestion").hide();
     $("#btn1").hide();
     $("#btn2").hide();
@@ -129,8 +134,8 @@ function clearAnswer() {
 // Display the game statistics, display button to restart quiz
 function displayStats() {
     $("#timeRemaining").hide();
-    $("#correctAns").html("Correct Answers: "+numCorrect);
-    $("#wrongAns").html("Wrong Answers: "+numWrong);
+    $("#correctAns").html("Correct Answers: "+numCorrect).css("color","green");
+    $("#wrongAns").html("Wrong Answers: "+numWrong).css("color","red");
     $("#restartQuiz").show();
 }
 
@@ -144,55 +149,17 @@ function clearStats() {
 }
 
 // Returns True if the correct answer selected, else returns False
-function checkAnswer(btn,ans){
-    // var btnAns = [ans1,ans2,ans3,ans4];
-    // var a;
-    
-    switch(btn) {
-        case "btn1":
-            // a = "ans1"
-            // console.log("ans.a: "+ans.a)
-            if (ans.ans1 === ans.correctAns) {
-                numCorrect++;
-                return true;
-            }
-            else {
-                numWrong++
-                return false;
-            }
-            break;
-        case "btn2":
-            if (ans.ans2 === ans.correctAns) {
-                numCorrect++
-                return true;
-            }
-            else {
-                numWrong++;
-                return false;
-            }
-            break;
-        case "btn3":
-            if (ans.ans3 === ans.correctAns) {
-                numCorrect++;
-                return true;
-            }
-            else {
-                numWrong++;
-                return false;
-            }
-            break;
-        case "btn4":
-            if (ans.ans4 === ans.correctAns) {
-                numCorrect++;
-                return true;
-            }
-            else {
-                numWrong++;
-                return false;
-            }
-            break;
+// btnVal: value of the button clicked, question: current question object
+function checkAnswer(btnVal,question){
+    disableButtons();
+    if (btnVal === question.correctAns) {
+        numCorrect++;
+        return true;
     }
-
+    else {
+        numWrong++;
+        return false;
+    }
 }
 
 function restartQuiz() {
@@ -213,4 +180,18 @@ function secondCountdown() {
     timeRemaining--;
     $("#timeRemaining").html("Time Remaining: "+timeRemaining+" seconds").show();
 
+}
+
+function disableButtons() {
+    $("#btn1").prop("disabled",true);
+    $("#btn2").prop("disabled",true);
+    $("#btn3").prop("disabled",true);
+    $("#btn4").prop("disabled",true);
+}
+
+function enableButtons() {
+    $("#btn1").prop("disabled",false);
+    $("#btn2").prop("disabled",false);
+    $("#btn3").prop("disabled",false);
+    $("#btn4").prop("disabled",false);
 }
