@@ -88,7 +88,7 @@ function displayQuestion(q) {
     timeRemaining = answerQuestionTime/1000; //convert to seconds the time allowed to answer the question
 
     $("#nextQuestionTime").hide(); // Hide the next question timer
-    $("#timeRemaining").html("Time Remaining: "+timeRemaining+" seconds").show(); // Display the time remaining to answer question
+    $("#timeRemaining").html("Time Remaining: "+timeRemaining+" seconds").show().css("color","black"); // Display the time remaining to answer question
 
     $("#questionNumber").html(questionNum+". ").show();; // Display question number
     $("#triviaQuestion").html(q.question).show(); // Display the trivia question with possible answers
@@ -193,7 +193,13 @@ function gameOver() {
 
 function secondCountdown() {
     timeRemaining--;
-    $("#timeRemaining").html("Time Remaining: "+timeRemaining+" seconds");
+
+    if (timeRemaining <= 5) {       // Warn user time is running out
+        $("#timeRemaining").html("Time Remaining: "+timeRemaining+" seconds").css("color","red");
+    }
+    else {
+        $("#timeRemaining").html("Time Remaining: "+timeRemaining+" seconds").css("color","black");   
+    }
     $("#nextQuestionTime").html("Next Question in: "+timeRemaining+" seconds");
 }
 
