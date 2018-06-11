@@ -122,7 +122,7 @@ function displayAnswer(a,r,q) {
         $("#result").html("Times's Up!").css("color","red");
         numWrong++;
     }
-
+    
     clearTimeout(questionTimer); // Stop the question timer
     clearInterval(secondTimer); // Stop the second timer
 
@@ -147,7 +147,6 @@ function clearAnswer() {
 
 // Display the game statistics, display button to restart quiz
 function displayStats() {
-    // $("#timeRemaining").hide();
     $("#correctAns").html("Correct Answers: "+numCorrect).css("color","green");
     $("#wrongAns").html("Wrong Answers: "+numWrong).css("color","red");
     $("#restartQuiz").show();
